@@ -1,7 +1,24 @@
 import { Link } from 'react-router-dom';
 import logo from '../../../assets/logo.svg';
+import { useContext } from 'react';
+import { AuthContext } from '../../../Providers/AuthProvider';
+import Swal from 'sweetalert2';
 
 const NavBar = () => {
+  const { user, logOut } = useContext(AuthContext);
+
+  //   handle logout
+  const handleSignOut = () => {
+    logOut()
+      .then(() => {
+        Swal('You loged out successfully');
+        console.log('User loged out successfully');
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   const navItems = (
     <>
       <li>
@@ -10,9 +27,31 @@ const NavBar = () => {
       <li>
         <Link to="/about">About</Link>
       </li>
-      <li>
-        <Link to="/register">SignUp</Link>
-      </li>
+
+      {user?.email ? (
+        <>
+          {/* <span>
+              <span className="font-bold mr-2">{user.displayName}!</span>
+            </span> */}
+          {/* <span>
+              <label
+                tabIndex={0}
+                className="btn btn-ghost btn-circle avatar mr-3"
+              >
+                <div className="w-10 rounded-full">
+                  <img src={user.photoURL} />
+                </div>
+              </label>
+            </span> */}
+          <li>
+            <a onClick={handleSignOut}>Sign Out</a>
+          </li>
+        </>
+      ) : (
+        <li>
+          <Link to="/login">Login</Link>
+        </li>
+      )}
     </>
   );
   return (
@@ -50,7 +89,9 @@ const NavBar = () => {
         <ul className="menu menu-horizontal px-1">{navItems}</ul>
       </div>
       <div className="navbar-end">
-        <button className="btn btn-outline btn-warning">Appointment</button>
+        <Link to="/appointment">
+          <button className="btn btn-outline btn-warning">Appointment</button>
+        </Link>
       </div>
     </div>
   );

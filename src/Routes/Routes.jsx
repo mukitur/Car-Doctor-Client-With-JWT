@@ -3,6 +3,10 @@ import MainRoot from '../Layout/MainRoot';
 import Home from '../Pages/Home/Home/Home';
 import Login from '../Pages/Login/Login';
 import Register from '../Pages/Register/Register';
+import Appointment from '../Pages/Appointment/Appointment';
+import PrivateRoute from '../PrivateRoute/PrivateRoute';
+import Dashboard from '../Pages/Dashboard/Dashboard';
+import CheckOut from '../Pages/CheckOut/CheckOut';
 
 const router = createBrowserRouter([
   {
@@ -20,6 +24,33 @@ const router = createBrowserRouter([
       {
         path: '/register',
         element: <Register />,
+      },
+      {
+        path: '/checkout/:id',
+        element: (
+          <PrivateRoute>
+            {' '}
+            <CheckOut />
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/services/${params.id}`),
+      },
+      {
+        path: '/appointment',
+        element: (
+          <PrivateRoute>
+            <Appointment />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/dashboard',
+        element: (
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        ),
       },
     ],
   },
