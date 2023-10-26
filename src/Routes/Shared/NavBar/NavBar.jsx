@@ -30,19 +30,9 @@ const NavBar = () => {
 
       {user?.email ? (
         <>
-          {/* <span>
-              <span className="font-bold mr-2">{user.displayName}!</span>
-            </span> */}
-          {/* <span>
-              <label
-                tabIndex={0}
-                className="btn btn-ghost btn-circle avatar mr-3"
-              >
-                <div className="w-10 rounded-full">
-                  <img src={user.photoURL} />
-                </div>
-              </label>
-            </span> */}
+          <li>
+            <Link to="/bookings">My Bookings</Link>
+          </li>
           <li>
             <a onClick={handleSignOut}>Sign Out</a>
           </li>

@@ -7,6 +7,7 @@ import Appointment from '../Pages/Appointment/Appointment';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import Dashboard from '../Pages/Dashboard/Dashboard';
 import CheckOut from '../Pages/CheckOut/CheckOut';
+import Bookings from '../Pages/Bookings/Bookings';
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,14 @@ const router = createBrowserRouter([
       {
         path: '/register',
         element: <Register />,
+      },
+      {
+        path: '/bookings',
+        element: (
+          <PrivateRoute>
+            <Bookings />
+          </PrivateRoute>
+        ),
       },
       {
         path: '/checkout/:id',
