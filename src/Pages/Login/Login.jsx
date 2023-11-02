@@ -1,4 +1,4 @@
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import image from '../../assets/images/login/login.svg';
 import { useContext } from 'react';
 import { AuthContext } from '../../Providers/AuthProvider';
@@ -34,7 +34,7 @@ const Login = () => {
       .then((result) => {
         console.log(result.user);
         // navigate after login
-        Navigate(location?.state ? location.state : '/');
+        navigate(location?.state ? location.state : '/');
       })
       .catch((error) => {
         console.log(error);

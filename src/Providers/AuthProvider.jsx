@@ -10,6 +10,7 @@ import {
   signOut,
 } from 'firebase/auth';
 import auth from '../FireBase/firebase.config';
+import axios from 'axios';
 
 export const AuthContext = createContext(null);
 
@@ -46,12 +47,32 @@ const AuthProvider = ({ children }) => {
   // set observe auth state change
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      const userEmail = currentUser?.email || user?.email;
+      const loggedUser = { email: userEmail };
       setUser(currentUser);
+      console.log('current user', currentUser);
       setLoading(false);
-      console.log('Observing current user from useEffect', currentUser);
+      // if user exists then issue a token
+      if (currentUser) {
+        axios
+          .post('http://localhost:3000/jwt', loggedUser, {
+            withCredentials: true,
+          })
+          .then((res) => {
+            console.log('token response', res.data);
+          });
+      } else {
+        axios
+          .post('http://localhost:3000/logout', loggedUser, {
+            withCredentials: true,
+          })
+          .then((res) => {
+            console.log(res.data);
+          });
+      }
     });
     return () => {
-      unsubscribe();
+      return unsubscribe();
     };
   }, []);
 
